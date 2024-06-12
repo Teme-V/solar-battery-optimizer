@@ -39,7 +39,7 @@ with open(input_file_path, newline='', encoding='utf-8') as csvfile:
 with open(output_file_path, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.writer(csvfile, delimiter=';')
     # Optionally write a header to the output file
-    writer.writerow(['Alkuaika', 'Määrä'])
+    writer.writerow(['startTime', 'invoicedConsumption'])
     for key, total_consumption in aggregated_data.items():
         writer.writerow([key, f'{total_consumption:.6f}'.replace('.', ',')])
 

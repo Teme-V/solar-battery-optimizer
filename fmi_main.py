@@ -15,8 +15,8 @@ from fmi_pvwatts import (
 
 # Define Main Variables
 
-start_date = '2024-05-06'  # Given in date without time
-days_to_count = 42  # Collect details ahead from start date, max 42 days at the time 
+start_date = '2024-03-07'  # Given in date without time
+days_to_count = 1  # Collect details ahead from start date, max 42 days at the time 
 location = 100949  # Location ID to fetch data available in FMI
 pv_total_kwp = 10  # PV system total kW peak
 tilt_angle = 30  # Tilt angle of PV modules

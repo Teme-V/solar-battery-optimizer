@@ -15,7 +15,7 @@ from datetime import datetime, timedelta, time
 ## PV production estimate fmi_main.py estimate PV production by nearest FMI location
 
 #Set start date
-str_start_date = '2024-03-15' 
+str_start_date = '2024-01-01' 
 end_date_today = True # Set True if the end date is today 
 str_end_date = '2024-03-10' # Define the end date if end_date_today = False
 
@@ -40,7 +40,7 @@ actual_start_date = datetime.strptime(str_start_date, '%Y-%m-%d') - timedelta(da
 start_date = actual_start_date.strftime('%Y-%m-%d')
 if end_date_today:
     today_date = datetime.today()
-    days_to_count = (today_date - actual_start_date).days -1
+    days_to_count = (today_date - actual_start_date).days -2
 else:
     end_date = datetime.strptime(str_end_date, '%Y-%m-%d')
     days_to_count = (end_date - actual_start_date).days 
@@ -66,9 +66,9 @@ def load_and_preprocess_prices(file_path):
 # Adjusted function to load and preprocess consumption CSV file
 def load_and_preprocess_consumption(file_path):
     df = pd.read_csv(file_path, sep=';', decimal=',')
-    # Assuming the "Alkuaika" column is already in UTC
-    df['Alkuaika'] = pd.to_datetime(df['Alkuaika'], utc=True)
-    df.rename(columns={'Alkuaika': 'Timestamp', 'Määrä': 'Consumption'}, inplace=True)
+    # Assuming the "startTime" column is already in UTC
+    df['startTime'] = pd.to_datetime(df['startTime'], utc=True)
+    df.rename(columns={'startTime': 'Timestamp', 'invoicedConsumption': 'Consumption'}, inplace=True)
     df.set_index('Timestamp', inplace=True)
     return df
 
@@ -93,9 +93,9 @@ def load_and_preprocess_solar(file_path, year):
 # Fingrid datahub production import
 #def load_and_preprocess_solar(file_path, year):
 #    df_solar = pd.read_csv(file_path, sep=';', decimal=',')
-#    # Assuming the "Alkuaika" column is already in UTC
-#    df_solar['Alkuaika'] = pd.to_datetime(df_solar['Alkuaika'], utc=True)
-#    df_solar.rename(columns={'Alkuaika': 'Timestamp', 'Määrä': 'AC System Output (W)'}, inplace=True)
+#    # Assuming the "startTime" column is already in UTC
+#    df_solar['startTime'] = pd.to_datetime(df_solar['startTime'], utc=True)
+#    df_solar.rename(columns={'startTime': 'Timestamp', 'invoicedConsumption': 'AC System Output (W)'}, inplace=True)
 #    df_solar.set_index('Timestamp', inplace=True)    
 #    return df_solar
 

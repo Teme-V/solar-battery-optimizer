@@ -7,12 +7,13 @@ import subprocess
 from dateutil import rrule
 import pytz
 import csv
+import time
 from pycaruna import CarunaPlus, TimeSpan
 
 
 # Variables for date range
-str_start_date = '2024-04-01'
-end_date_now = True  # Set True if get data to most recent date = yesterday
+str_start_date = '2024-06-01'
+end_date_now = True  # Set True if get data to most recent date = day before yesterday
 str_end_date = '2024-05-01'  # Define the end date if end_date_now = False
 
 def validate_token():
@@ -29,6 +30,7 @@ def validate_token():
             # Token is older than 1 hour, re-authenticate
             subprocess.run([sys.executable, 'caruna_authenticate.py'])
             config.read('.secrets.txt')  # Reload the updated secrets.txt
+            time.sleep(1)
 
 def get_date_range(str_start_date, end_date_now, str_end_date=None):
     local_tz = pytz.timezone('Europe/Helsinki')
@@ -36,9 +38,9 @@ def get_date_range(str_start_date, end_date_now, str_end_date=None):
 
     finland_time = datetime.datetime.now(pytz.timezone('Europe/Helsinki'))
     if finland_time.hour >= 9:
-        today = finland_time - datetime.timedelta(days=0)
-    else:
         today = finland_time - datetime.timedelta(days=1)
+    else:
+        today = finland_time - datetime.timedelta(days=2)
     today = today.astimezone(pytz.utc)
 
     if end_date_now:
